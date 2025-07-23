@@ -2,6 +2,8 @@ FROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime
 
 WORKDIR /app
 RUN apt-get update && \
+    ENV DEBIAN_FRONTEND=noninteractive
+    ENV TZ=Europe/Stockholm
     apt-get install -y --no-install-recommends \
     git ffmpeg libsm6 libxext6 libgl1 \
     pkg-config libavformat-dev libavcodec-dev libavdevice-dev libavutil-dev \
