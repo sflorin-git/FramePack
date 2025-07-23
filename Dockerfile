@@ -1,13 +1,15 @@
 FROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime
 
 WORKDIR /app
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Stockholm
+
 RUN apt-get update && \
-    ENV DEBIAN_FRONTEND=noninteractive
-    ENV TZ=Europe/Stockholm
     apt-get install -y --no-install-recommends \
     git ffmpeg libsm6 libxext6 libgl1 \
     pkg-config libavformat-dev libavcodec-dev libavdevice-dev libavutil-dev \
-    libavfilter-dev libswscale-dev libswresample-dev && \
+    libavfilter-dev libswscale-dev libswresample-dev tzdata && \
     rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/lllyasviel/FramePack.git
@@ -23,5 +25,4 @@ RUN sed -i 's/torch.backends.cuda.cudnn_sdp_enabled()/hasattr(torch.backends.cud
 
 EXPOSE 7860
 
-# Automatisera input: välj "8" vid prompt
-CMD printf "8\n" | python demo_gradio.py --port 7860
+CMD ["python", "demo_gradio.py", "--port", "7860"]
