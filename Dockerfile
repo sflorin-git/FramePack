@@ -21,4 +21,5 @@ RUN sed -i 's/torch.backends.cuda.cudnn_sdp_enabled()/hasattr(torch.backends.cud
 
 EXPOSE 7860
 
-CMD ["python", "demo_gradio.py", "--port", "7860"]
+# Automatisera input: välj "8" vid prompt
+CMD printf "8\n" | python demo_gradio.py --port 7860
